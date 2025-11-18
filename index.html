@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graduation Polaroid Builder</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    label {
+        font-weight: 600;
+        display: block;
+        margin-top: 15px;
+    }
+
+    select, input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    .preview {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .polaroid {
+        width: 300px;
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.15);
+        margin: auto;
+        position: relative;
+    }
+
+    .gold-bar {
+        text-align: center;
+        font-weight: bold;
+        padding: 5px;
+        background: linear-gradient(45deg, #e6c200, #f9e27a, #cfa800);
+        color: #5a4a00;
+        border-radius: 5px;
+        margin-top: 5px;
+        font-size: 14px;
+        box-shadow: 0 0 10px rgba(255,215,0,0.7);
+    }
+
+    .student-name {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 8px;
+    }
+
+    .quote {
+        text-align: center;
+        font-size: 13px;
+        margin-top: 5px;
+        font-style: italic;
+        color: #444;
+    }
+
+    .polaroid-img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+</style>
+</head>
+
+<body>
+
+<h1>Graduation Polaroid Builder</h1>
+
+<div class="container">
+
+    <label>First Name *</label>
+    <input type="text" id="fname" placeholder="Enter First Name">
+
+    <label>Middle Name (optional)</label>
+    <input type="text" id="mname" placeholder="Enter Middle Name">
+
+    <label>Last Name *</label>
+    <input type="text" id="lname" placeholder="Enter Last Name">
+
+    <label>Instagram Handle * (ex: @john_doe)</label>
+    <input type="text" id="instagram" placeholder="@username">
+
+    <label>Graduation Strand *</label>
+    <select id="strand">
+        <option value="">-- Select --</option>
+        <option>STEM</option>
+        <option>ABM</option>
+        <option>HUMSS</option>
+        <option>TVL - Home Economics</option>
+        <option>TVL - ICT</option>
+    </select>
+
+    <label>Choose Theme Style *</label>
+    <select id="theme">
+        <option value="">-- Select --</option>
+        <option>Plain</option>
+        <option>Aesthetic</option>
+        <option>School Colors Premium</option>
+    </select>
+
+    <label>Graduation Quote</label>
+    <textarea id="quote" rows="3" placeholder="Write your graduation quote..."></textarea>
+
+    <label>Upload Baby/Childhood Photo *</label>
+    <input type="file" id="photo" accept="image/*">
+
+    <label>Class Year *</label>
+    <input type="text" id="classYear" placeholder="Ex: Class of 2026">
+
+    <div class="preview">
+        <h3>Live Preview</h3>
+        <div class="polaroid" id="polaroid">
+            <img id="preview-img" class="polaroid-img" src="">
+            <div class="gold-bar" id="yearPreview">Class of 2026</div>
+            <div class="student-name" id="namePreview">Your Name</div>
+            <div class="quote" id="quotePreview">Your quote will appear here...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const fname = document.getElementById("fname");
+    const mname = document.getElementById("mname");
+    const lname = document.getElementById("lname");
+    const quote = document.getElementById("quote");
+    const year = document.getElementById("classYear");
+    const imgInput = document.getElementById("photo");
+
+    fname.oninput = updateName;
+    mname.oninput = updateName;
+    lname.oninput = updateName;
+    quote.oninput = () => document.getElementById("quotePreview").innerText = quote.value;
+    year.oninput = () => document.getElementById("yearPreview").innerText = year.value;
+
+    imgInput.onchange = function() {
+        const file = imgInput.files[0];
+        const reader = new FileReader();
+        reader.onloadend = function() {
+            document.getElementById("preview-img").src = reader.result;
+        }
+        reader.readAsDataURL(file);
+    };
+
+    function updateName() {
+        let full = fname.value + " " + (mname.value ? mname.value + " " : "") + lname.value;
+        document.getElementById("namePreview").innerText = full;
+    }
+</script>
+
+</body>
+</html>
+
